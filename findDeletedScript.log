@@ -1,0 +1,25 @@
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# PID=$(pgrep -f '^bash /opt/script.sh$')
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# echo $PID
+56685
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# sudo ls -l "/proc/$PID/fd"
+total 0
+lrwx------ 1 root root 64 Oct 30 13:49 0 -> /dev/pts/5
+lrwx------ 1 root root 64 Oct 30 13:49 1 -> /dev/pts/5
+lrwx------ 1 root root 64 Oct 30 13:49 2 -> /dev/pts/5
+lr-x------ 1 root root 64 Oct 30 13:49 255 -> '/opt/script.sh (deleted)'
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# FD=$(sudo ls -l "/proc/$PID/fd" | awk '/script.sh/ {print $9}')
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# echo $FD
+255
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# cat "/proc/$PID/fd/$FD"
+#!/bin/bash
+while true; do
+  date >> /opt/my.log
+  sleep 1
+done
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# cat "/proc/$PID/fd/$FD" > /opt/script.restored
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# cat /opt/script.restored
+#!/bin/bash
+while true; do
+  date >> /opt/my.log
+  sleep 1
+done
