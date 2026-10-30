@@ -1,0 +1,20 @@
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# wc -l /opt/my.log ; sleep 2 ; wc -l /opt/my.log
+53 /opt/my.log
+55 /opt/my.log
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# PID=$(pgrep -f '^bash /opt/script.sh$')
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# echo PID
+PID
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# echo $PID
+56685
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# rm /opt/script.sh
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# ls -l /opt/script.sh
+ls: cannot access '/opt/script.sh': No such file or directory
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# sudo ls -l "/proc/$PID/fd"
+total 0
+lrwx------ 1 root root 64 Oct 30 13:49 0 -> /dev/pts/5
+lrwx------ 1 root root 64 Oct 30 13:49 1 -> /dev/pts/5
+lrwx------ 1 root root 64 Oct 30 13:49 2 -> /dev/pts/5
+lr-x------ 1 root root 64 Oct 30 13:49 255 -> '/opt/script.sh (deleted)'
+root@DESKTOP-S05IOR5:/home/gera/practicum/3sprint# wc -l /opt/my.log ; sleep 2 ; wc -l /opt/my.log
+448 /opt/my.log
+450 /opt/my.log
